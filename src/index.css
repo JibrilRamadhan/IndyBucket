@@ -20,3 +20,21 @@
     display: none;
   }
 }
+
+/* Splide Carousel Custom Styles */
+.splide__pagination {
+  bottom: -2rem !important;
+}
+
+.splide__pagination__page {
+  background: #d5c3bc !important;
+  opacity: 0.5 !important;
+  width: 8px !important;
+  height: 8px !important;
+}
+
+.splide__pagination__page.is-active {
+  background: #7a503d !important;
+  opacity: 1 !important;
+  transform: scale(1.3);
+}

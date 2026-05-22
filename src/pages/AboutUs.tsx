@@ -43,7 +43,7 @@ export default function AboutUs() {
               <img
                 alt="Artisan crafting gift bucket"
                 className="w-full h-full object-cover"
-                src="https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80"
+                src="/img/Buket kupu( uang + rokok) 🍫💝Free kartu ucapan💌Bisa request sesuai budgetTanya pricelist ata.webp"
               />
             </div>
           </div>

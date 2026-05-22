@@ -2,31 +2,38 @@ export default function Footer() {
   return (
     <footer className="bg-primary-container dark:bg-primary-container text-on-primary-container dark:text-on-primary-container w-full">
       <div className="grid grid-cols-1 md:grid-cols-6 gap-stack-lg px-gutter py-section-gap-md w-full max-w-container-max mx-auto">
-        <div className="md:col-span-2 flex flex-col gap-4">
+<div className="md:col-span-2 flex flex-col gap-5">
           {/* Logo and Brand */}
           <div className="flex items-center gap-3">
-            <svg className="h-8 w-8" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="8" stroke="#FDF9F4" strokeWidth="2.5" fill="none"/>
-              <path d="M50 42 Q40 30 35 25 Q30 20 28 22 Q26 24 30 28 Q35 33 42 40" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 42 Q60 30 65 25 Q70 20 72 22 Q74 24 70 28 Q65 33 58 40" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M42 50 Q30 40 25 35 Q20 30 22 28 Q24 26 28 30 Q33 35 40 42" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M58 50 Q70 40 75 35 Q80 30 78 28 Q76 26 72 30 Q67 35 60 42" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 58 Q40 70 35 75 Q30 80 28 78 Q26 76 30 72 Q35 67 42 60" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 58 Q60 70 65 75 Q70 80 72 78 Q74 76 70 72 Q65 67 58 60" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M42 50 Q30 60 25 65 Q20 70 22 72 Q24 74 28 70 Q33 65 40 58" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M58 50 Q70 60 75 65 Q80 70 78 72 Q76 74 72 70 Q67 65 60 58" stroke="#FDF9F4" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-            </svg>
+            <div className="relative h-8 w-8 rounded-full bg-surface-white flex items-center justify-center p-1 shadow-sm">
+              <img
+                src="/img/Logo.png"
+                alt="Indy Bucket Logo"
+                className="h-full w-full object-contain"
+              />
+            </div>
             <span className="font-headline-sm text-headline-sm text-on-primary-container">
               Indy Bucket
             </span>
           </div>
-          <p className="font-body-sm text-body-sm text-on-primary-container/80 max-w-xs">
-            Bouquet, Hampers, Gift & Hantaran
+          
+          <p className="font-body-sm text-body-sm text-on-primary-container/90 max-w-xs leading-relaxed">
+            Menghadirkan kreasi buket, hampers, dan hantaran premium yang dirangkai khusus untuk menyempurnakan setiap momen berharga Anda.
           </p>
-          <div className="flex flex-col gap-2 text-on-primary-container/80 font-body-sm text-body-sm">
-            <p>⏳ Max Order H-3</p>
-            <p>📍 Surabaya</p>
-            <p>💸 Melayani CBD & COD</p>
+          
+          <div className="flex flex-col gap-1.5 text-on-primary-container/80 font-body-sm text-body-sm mt-2">
+            <p className="flex items-center gap-2">
+               <span className="w-1 h-1 rounded-full bg-on-primary-container/50"></span>
+               Pemesanan maksimal H-3
+            </p>
+            <p className="flex items-center gap-2">
+               <span className="w-1 h-1 rounded-full bg-on-primary-container/50"></span>
+               Berbasis di Surabaya
+            </p>
+            <p className="flex items-center gap-2">
+               <span className="w-1 h-1 rounded-full bg-on-primary-container/50"></span>
+               Melayani CBD & COD
+            </p>
           </div>
         </div>
 

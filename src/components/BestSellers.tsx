@@ -3,59 +3,59 @@ export default function BestSellers() {
     {
       name: 'Classic Money Presentation',
       price: '$110',
-      image: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=800&q=80',
+      image: '/img/Buket uang💝Free kartu ucapan💌Bisa request sesuai budgetTanya pricelist atau info lainnya Chat.webp',
     },
     {
       name: 'Luxury Rose Bucket',
       price: '$135',
-      image: 'https://images.unsplash.com/photo-1606800052052-a08af7148866?w=800&q=80',
+      image: '/img/Blackpink bouquet🖤💗Free kartu ucapan💌Bisa request sesuai budgetTanya pricelist atau info lai.webp',
     },
     {
       name: 'Premium Gift Bucket',
       price: '$150',
-      image: 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=800&q=80',
+      image: '/img/Buket perhiasan (cincin+gelang) 🍫💝Free kartu ucapan💌Bisa request sesuai budgetTanya pricelis.webp',
     },
     {
       name: 'Deluxe Snack Collection',
       price: '$125',
-      image: 'https://images.unsplash.com/photo-1514995669114-6081e934b693?w=800&q=80',
+      image: '/img/Buket snack 🍫💝Free kartu ucapan💌Bisa request sesuai budgetTanya pricelist atau info lainnya .webp',
     },
   ];
 
   return (
-    <section className="bg-surface-container-low py-section-gap-md md:py-section-gap-lg">
+    <section className="bg-surface-container-low py-12 md:py-section-gap-lg">
       <div className="max-w-container-max mx-auto px-gutter text-center flex flex-col items-center">
         <span 
-          className="px-4 py-1 bg-secondary-container text-on-secondary-container rounded-full font-label-md text-label-md mb-stack-sm inline-block"
+          className="px-3 py-1 md:px-4 md:py-1 bg-secondary-container text-on-secondary-container rounded-full text-[10px] md:font-label-md md:text-label-md mb-2 md:mb-stack-sm inline-block"
           data-aos="fade-down"
         >
           Premium Selections
         </span>
         <h2 
-          className="font-headline-lg text-headline-lg text-primary mb-stack-lg md:mb-section-gap-md"
+          className="font-headline-lg text-xl md:text-headline-lg text-primary mb-6 md:mb-section-gap-md"
           data-aos="fade-up"
           data-aos-delay="100"
         >
           Our Bestselling Buckets
         </h2>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-stack-md w-full">
+        <div className="grid grid-cols-4 gap-2 md:gap-stack-md w-full">
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-surface-white rounded-2xl p-4 flex flex-col items-center text-center shadow-[0_4px_20px_rgba(122,80,61,0.05)] hover:shadow-[0_8px_30px_rgba(122,80,61,0.08)] transition-shadow duration-300"
+              className="bg-surface-white rounded-lg md:rounded-2xl p-2 md:p-4 flex flex-col items-center text-center shadow-[0_4px_20px_rgba(122,80,61,0.05)] hover:shadow-[0_8px_30px_rgba(122,80,61,0.08)] transition-shadow duration-300"
               data-aos="zoom-in"
               data-aos-delay={index * 100}
             >
-              <div className="w-full aspect-square rounded-xl overflow-hidden mb-4 relative">
+              <div className="w-full aspect-square rounded-md md:rounded-xl overflow-hidden mb-2 md:mb-4 relative">
                 <img
                   alt={product.name}
                   className="w-full h-full object-cover"
                   src={product.image}
                 />
               </div>
-              <h3 className="font-headline-sm text-headline-sm text-on-surface mb-1">{product.name}</h3>
-              <p className="font-label-lg text-label-lg text-primary-container">{product.price}</p>
+              <h3 className="font-headline-sm text-[10px] md:text-headline-sm text-on-surface mb-0.5 md:mb-1 line-clamp-2">{product.name}</h3>
+              <p className="font-label-lg text-[9px] md:text-label-lg text-primary-container">{product.price}</p>
             </div>
           ))}
         </div>

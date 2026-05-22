@@ -36,18 +36,13 @@ export default function Navbar() {
         <div className="flex items-center justify-between w-full">
           {/* Logo */}
           <div className="flex items-center gap-3">
-            {/* Floral Line Art Logo Icon */}
-            <svg className="h-10 w-10" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <circle cx="50" cy="50" r="8" stroke="#7A503D" strokeWidth="2.5" fill="none"/>
-              <path d="M50 42 Q40 30 35 25 Q30 20 28 22 Q26 24 30 28 Q35 33 42 40" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 42 Q60 30 65 25 Q70 20 72 22 Q74 24 70 28 Q65 33 58 40" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M42 50 Q30 40 25 35 Q20 30 22 28 Q24 26 28 30 Q33 35 40 42" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M58 50 Q70 40 75 35 Q80 30 78 28 Q76 26 72 30 Q67 35 60 42" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 58 Q40 70 35 75 Q30 80 28 78 Q26 76 30 72 Q35 67 42 60" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M50 58 Q60 70 65 75 Q70 80 72 78 Q74 76 70 72 Q65 67 58 60" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M42 50 Q30 60 25 65 Q20 70 22 72 Q24 74 28 70 Q33 65 40 58" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-              <path d="M58 50 Q70 60 75 65 Q80 70 78 72 Q76 74 72 70 Q67 65 60 58" stroke="#7A503D" strokeWidth="2.5" strokeLinecap="round" fill="none"/>
-            </svg>
+            <div className="relative h-10 w-10 rounded-full bg-primary flex items-center justify-center p-1.5">
+              <img
+                src="/img/Logo.png"
+                alt="Indy Bucket Logo"
+                className="h-full w-full object-contain"
+              />
+            </div>
             <span className="font-headline-md text-headline-md text-primary dark:text-inverse-primary tracking-tight">
               Indy Bucket
             </span>
