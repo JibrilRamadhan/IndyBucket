@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .arch-clip {
+    clip-path: path('M0,150 Q0,0 150,0 Q300,0 300,150 L300,400 L0,400 Z');
+  }
+  .pill-tall {
+    border-radius: 9999px 9999px 2rem 2rem;
+  }
+  .arch-top {
+    border-radius: 12rem 12rem 1rem 1rem;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
