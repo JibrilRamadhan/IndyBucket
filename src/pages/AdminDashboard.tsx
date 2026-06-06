@@ -6,6 +6,8 @@ import {
   Server, Database, Cloud, LogOut, Loader2, ChevronRight
 } from 'lucide-react';
 
+const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
+
 const AdminDashboard: React.FC = () => {
   const [user, setUser] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -20,7 +22,7 @@ const AdminDashboard: React.FC = () => {
       setUser(session.user);
 
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/admin/dashboard', {
+        const res = await fetch(`${API_BASE}/admin/dashboard`, {
           headers: { 'Authorization': `Bearer ${session.access_token}` }
         });
         setBackendStatus(res.ok ? 'ok' : 'error');
@@ -29,7 +31,7 @@ const AdminDashboard: React.FC = () => {
       }
 
       try {
-        const res = await fetch('http://127.0.0.1:8000/api/products');
+        const res = await fetch(`${API_BASE}/products`);
         if (res.ok) {
           const data = await res.json();
           setProductCount(data.products?.length ?? 0);
