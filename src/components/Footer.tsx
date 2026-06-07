@@ -5,7 +5,7 @@ export default function Footer() {
 <div className="md:col-span-2 flex flex-col gap-5">
           {/* Logo and Brand */}
           <div className="flex items-center gap-3">
-            <div className="relative h-8 w-8 rounded-full bg-surface-white flex items-center justify-center p-1 shadow-sm">
+            <div className="relative h-12 w-12 flex items-center justify-center">
               <img
                 src="/img/Logo.png"
                 alt="Indy Bucket Logo"

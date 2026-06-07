@@ -6,8 +6,8 @@ export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
 
-  // Transparan hanya di halaman Home ("/")
-  const isHome = location.pathname === '/';
+  // Transparan di halaman Home ("/") dan About ("/about")
+  const isHome = location.pathname === '/' || location.pathname === '/about';
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -134,8 +134,8 @@ export default function Navbar() {
         </div>
       </header>
 
-      {/* Spacer agar konten tidak tertutup navbar — hanya di halaman NON-Home */}
-      {!isHome && <div className="h-[72px]" />}
+      {/* Spacer agar konten tidak tertutup navbar — hanya di halaman NON-Home & NON-About */}
+      {location.pathname !== '/' && location.pathname !== '/about' && <div className="h-[72px]" />}
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
