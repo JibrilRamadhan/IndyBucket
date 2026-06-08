@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import { Star, Sparkles, CheckCircle, SlidersHorizontal, MessageCircle } from 'lucide-react';
 import { useSiteProducts, formatRupiah } from '../hooks/useSiteProducts';
+import type { SiteProduct } from '../hooks/useSiteProducts';
+import ProductModal from '../components/ProductModal';
 
 type FilterType = 'all' | 'best_seller' | 'new' | 'available';
 
@@ -16,6 +18,7 @@ export default function Collections() {
   const [filter, setFilter] = useState<FilterType>('all');
   const [sort, setSort] = useState<'newest' | 'price_asc' | 'price_desc'>('newest');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedProduct, setSelectedProduct] = useState<SiteProduct | null>(null);
 
   const ITEMS_PER_PAGE = 12;
 
@@ -147,6 +150,7 @@ export default function Collections() {
                 return (
                   <article
                     key={product.id}
+                    onClick={() => setSelectedProduct(product)}
                     className="group cursor-pointer bg-surface-white/30 hover:bg-surface-white/80 backdrop-blur-sm border border-outline-variant/20 rounded-[2rem] p-4 hover:shadow-[0_16px_40px_rgba(95,57,40,0.08)] hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between"
                     data-aos="fade-up"
                     data-aos-delay={(index % 3) * 100}
@@ -224,15 +228,12 @@ export default function Collections() {
                     </div>
 
                     <div className="mt-4 text-center">
-                      <a
-                        href={`https://wa.me/6281554107944?text=Halo%20Indy%20Bucket%2C%20saya%20tertarik%20dengan%20*${encodeURIComponent(product.name)}*%20seharga%20${encodeURIComponent(formatRupiah(product.price))}.%20Apakah%20masih%20tersedia%3F`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={e => e.stopPropagation()}
-                        className={`inline-flex items-center justify-center text-[11px] font-semibold transition-all duration-300 gap-1 pb-0.5 ${isOOS ? 'text-text-muted cursor-not-allowed opacity-50' : 'text-primary-container border-b border-primary-container/0 group-hover:border-primary-container/80'}`}
+                      <button
+                        onClick={() => setSelectedProduct(product)}
+                        className={`inline-flex items-center justify-center text-[11px] font-semibold transition-all duration-300 gap-1 pb-0.5 ${isOOS ? 'text-text-muted opacity-50' : 'text-primary-container border-b border-primary-container/0 group-hover:border-primary-container/80'}`}
                       >
-                        {isOOS ? 'Stok Habis' : 'Pesan via WhatsApp'} <span className="translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
-                      </a>
+                        Lihat Detail <span className="translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
+                      </button>
                     </div>
                   </article>
                 );
@@ -317,6 +318,12 @@ export default function Collections() {
           </a>
         </div>
       </div>
+
+      {/* ─── Product Detail Modal ──────────────────────────────────── */}
+      <ProductModal
+        product={selectedProduct}
+        onClose={() => setSelectedProduct(null)}
+      />
     </div>
   );
 }

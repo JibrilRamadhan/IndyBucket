@@ -1,4 +1,5 @@
 import { useSectionProducts, primaryImage, formatRupiah } from '../hooks/useSiteProducts';
+import type { SiteProduct } from '../hooks/useSiteProducts';
 import { Star } from 'lucide-react';
 
 function SkeletonCard() {
@@ -11,7 +12,11 @@ function SkeletonCard() {
   );
 }
 
-export default function BestSellers() {
+interface BestSellersProps {
+  onSelectProduct?: (product: SiteProduct) => void;
+}
+
+export default function BestSellers({ onSelectProduct }: BestSellersProps) {
   const { products, loading } = useSectionProducts('bestseller');
   const displayed = loading ? [] : products.slice(0, 4);
 
@@ -46,10 +51,10 @@ export default function BestSellers() {
             : displayed.map((product, index) => {
                 const img = primaryImage(product);
                 return (
-                  <a
+                  <button
                     key={product.id}
-                    href="/collections"
-                    className="group bg-surface-white/30 hover:bg-surface-white/80 backdrop-blur-sm border border-outline-variant/20 rounded-[2rem] p-4 flex flex-col items-center text-center shadow-[0_4px_20px_rgba(122,80,61,0.03)] hover:shadow-[0_16px_40px_rgba(95,57,40,0.08)] hover:-translate-y-1.5 transition-all duration-500 w-full"
+                    onClick={() => onSelectProduct?.(product)}
+                    className="text-left group bg-surface-white/30 hover:bg-surface-white/80 backdrop-blur-sm border border-outline-variant/20 rounded-[2rem] p-4 flex flex-col items-center text-center shadow-[0_4px_20px_rgba(122,80,61,0.03)] hover:shadow-[0_16px_40px_rgba(95,57,40,0.08)] hover:-translate-y-1.5 transition-all duration-500 w-full"
                     data-aos="zoom-in"
                     data-aos-delay={index * 100}
                   >
@@ -70,7 +75,7 @@ export default function BestSellers() {
                     <p className="font-price text-sm text-secondary font-semibold">
                       {formatRupiah(product.price)}
                     </p>
-                  </a>
+                  </button>
                 );
               })
           }

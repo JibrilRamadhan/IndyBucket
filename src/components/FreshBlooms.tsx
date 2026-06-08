@@ -1,7 +1,12 @@
 import { useSectionProducts, primaryImage, formatRupiah } from '../hooks/useSiteProducts';
+import type { SiteProduct } from '../hooks/useSiteProducts';
 import { ArrowRight } from 'lucide-react';
 
-export default function FreshBlooms() {
+interface FreshBloomsProps {
+  onSelectProduct?: (product: SiteProduct) => void;
+}
+
+export default function FreshBlooms({ onSelectProduct }: FreshBloomsProps) {
   const { products, loading } = useSectionProducts('fresh');
   const displayed = loading ? [] : products.filter(p => p.images.length > 0).slice(0, 3);
 
@@ -40,10 +45,10 @@ export default function FreshBlooms() {
             : displayed.map((product, index) => {
                 const img = primaryImage(product);
                 return (
-                  <a
+                  <button
                     key={product.id}
-                    href="/collections"
-                    className={`relative w-full aspect-[0.55] rounded-lg md:rounded-xl overflow-hidden group ${index === 1 ? 'md:translate-y-8' : ''}`}
+                    onClick={() => onSelectProduct?.(product)}
+                    className={`relative text-left block w-full aspect-[0.55] rounded-lg md:rounded-xl overflow-hidden group ${index === 1 ? 'md:translate-y-8' : ''}`}
                     data-aos="fade-up"
                     data-aos-delay={index * 150}
                   >
@@ -57,7 +62,7 @@ export default function FreshBlooms() {
                       <span className="font-label-md text-[10px] md:text-label-md text-primary truncate w-full text-center font-semibold">{product.name}</span>
                       <span className="font-price text-[9px] md:text-price text-secondary mt-0.5 font-semibold">{formatRupiah(product.price)}</span>
                     </div>
-                  </a>
+                  </button>
                 );
               })
           }

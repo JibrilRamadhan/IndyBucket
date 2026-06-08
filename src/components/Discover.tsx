@@ -3,6 +3,7 @@ import { Splide, SplideSlide } from '@splidejs/react-splide';
 // @ts-ignore
 import '@splidejs/react-splide/css';
 import { useSectionProducts, primaryImage, formatRupiah } from '../hooks/useSiteProducts';
+import type { SiteProduct } from '../hooks/useSiteProducts';
 import { Sparkles } from 'lucide-react';
 
 // Skeleton card
@@ -16,7 +17,11 @@ function SkeletonCard() {
   );
 }
 
-export default function Discover() {
+interface DiscoverProps {
+  onSelectProduct?: (product: SiteProduct) => void;
+}
+
+export default function Discover({ onSelectProduct }: DiscoverProps) {
   const { products, loading } = useSectionProducts('discover');
 
   // Tampilkan maks 4 produk dari section 'discover'
@@ -66,10 +71,10 @@ export default function Discover() {
                 const img = primaryImage(product);
                 const badge = labelBadge(product.label);
                 return (
-                  <a
+                  <button
                     key={product.id}
-                    href="/collections"
-                    className="group cursor-pointer bg-surface-white/30 hover:bg-surface-white/80 backdrop-blur-sm border border-outline-variant/20 rounded-[2rem] p-4 hover:shadow-[0_16px_40px_rgba(95,57,40,0.08)] hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between"
+                    onClick={() => onSelectProduct?.(product)}
+                    className="text-left w-full group cursor-pointer bg-surface-white/30 hover:bg-surface-white/80 backdrop-blur-sm border border-outline-variant/20 rounded-[2rem] p-4 hover:shadow-[0_16px_40px_rgba(95,57,40,0.08)] hover:-translate-y-1.5 transition-all duration-500 flex flex-col justify-between"
                     data-aos="fade-up"
                     data-aos-delay={index * 100}
                   >
@@ -95,7 +100,7 @@ export default function Discover() {
                         Pesan Sekarang <span className="translate-x-0 group-hover:translate-x-1 transition-transform">→</span>
                       </span>
                     </div>
-                  </a>
+                  </button>
                 );
               })}
         </div>
@@ -113,7 +118,7 @@ export default function Discover() {
                 const badge = labelBadge(product.label);
                 return (
                   <SplideSlide key={product.id}>
-                    <a href="/collections" className="group cursor-pointer block bg-surface-white/40 border border-outline-variant/20 rounded-[1.5rem] p-3 flex flex-col h-full justify-between">
+                    <button onClick={() => onSelectProduct?.(product)} className="text-left w-full group cursor-pointer block bg-surface-white/40 border border-outline-variant/20 rounded-[1.5rem] p-3 flex flex-col h-full justify-between">
                       <div>
                         <div className="relative w-full aspect-[3/4] rounded-t-[8rem] rounded-b-[0.75rem] overflow-hidden bg-surface-container mb-3 shadow-sm">
                           {img
@@ -131,7 +136,7 @@ export default function Discover() {
                           <p className="font-price text-xs text-secondary font-semibold">{formatRupiah(product.price)}</p>
                         </div>
                       </div>
-                    </a>
+                    </button>
                   </SplideSlide>
                 );
               })}

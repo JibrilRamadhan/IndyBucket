@@ -246,7 +246,7 @@ export default function AboutUs() {
           className="mx-auto max-w-5xl grid grid-cols-3 gap-6 md:gap-0 md:divide-x divide-white/20"
         >
           {[
-            { value: 2400, suffix: "+", label: "Buket Terkirim" },
+            { value: 100, suffix: "+", label: "Buket Terkirim" },
             { value: 98, suffix: "%", label: "Kepuasan Klien" },
             { value: 5, suffix: "+ Tahun", label: "Melayani Surabaya" },
           ].map((s, i) => (
@@ -285,7 +285,7 @@ export default function AboutUs() {
               />
               <div className="overflow-hidden rounded-[2rem] shadow-[0_40px_100px_-20px_rgba(95,57,40,0.3)]">
                 <motion.img
-                  src="/img/Buket kupu( uang + rokok) 🍫💝Free kartu ucapan💌Bisa request sesuai budgetTanya pricelist ata.webp"
+                  src="/img/buket-kupu-premium.webp"
                   alt="Rangkaian buket premium Indy Buket"
                   style={{ y: storyImgY }}
                   className="w-full aspect-[4/5] object-cover scale-[1.12]"
@@ -339,13 +339,12 @@ export default function AboutUs() {
 
             <p className="mt-6 text-base leading-relaxed text-[#7a5444]">
               Indy Buket lahir di jantung kota Surabaya — sebuah studio yang
-              percaya bahwa setiap momen, dari wisuda mahasiswa Unair dan ITS
-              hingga ulang tahun keluarga, layak dirayakan dengan rangkaian
+              percaya bahwa setiap momen, dari wisuda mahasiswa hingga ulang tahun keluarga, layak dirayakan dengan rangkaian
               yang sungguh istimewa.
             </p>
             <p className="mt-4 text-base leading-relaxed text-[#7a5444]">
               Kami melayani komunitas lokal dan mahasiswa dengan tiga
-              signature: buah segar pilihan, mawar satin jahit tangan, dan
+              signature: buah segar pilihan, mawar satin, dan
               money &amp; bear bouquet untuk hari paling berarti.
             </p>
 
@@ -365,80 +364,78 @@ export default function AboutUs() {
 
       {/* ─── JOURNEY / TIMELINE ───────────────────────────────────────────── */}
       {false && (
-      <section className="py-20 md:py-28 px-6 md:px-12 bg-[#FAF6F1]">
-        <div className="mx-auto max-w-4xl">
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="text-center mb-16"
-          >
-            <span className="text-[0.65rem] font-semibold uppercase tracking-[0.38em] text-[#a87559]">
-              Perjalanan Kami
-            </span>
-            <h2
-              className="mt-4 text-4xl md:text-5xl font-light text-[#5f3928]"
-              style={{ fontFamily: "'Playfair Display', serif" }}
+        <section className="py-20 md:py-28 px-6 md:px-12 bg-[#FAF6F1]">
+          <div className="mx-auto max-w-4xl">
+            <motion.div
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-16"
             >
-              Dari hobi menjadi{" "}
-              <em className="italic text-[#a8453a]">panggilan</em>.
-            </h2>
-          </motion.div>
+              <span className="text-[0.65rem] font-semibold uppercase tracking-[0.38em] text-[#a87559]">
+                Perjalanan Kami
+              </span>
+              <h2
+                className="mt-4 text-4xl md:text-5xl font-light text-[#5f3928]"
+                style={{ fontFamily: "'Playfair Display', serif" }}
+              >
+                Dari hobi menjadi{" "}
+                <em className="italic text-[#a8453a]">panggilan</em>.
+              </h2>
+            </motion.div>
 
-          {/* Timeline */}
-          <div ref={journeyRef} className="relative">
-            {/* Animated line */}
-            <div className="absolute left-[18px] md:left-1/2 top-0 bottom-0 w-px bg-[#EAD9CF] -translate-x-1/2">
-              <motion.div
-                className="absolute top-0 left-0 w-full bg-[#a8453a] origin-top"
-                style={{ height: lineHeight }}
-              />
-            </div>
-
-            <div className="space-y-12 md:space-y-0">
-              {journey.map((item, i) => (
+            {/* Timeline */}
+            <div ref={journeyRef} className="relative">
+              {/* Animated line */}
+              <div className="absolute left-[18px] md:left-1/2 top-0 bottom-0 w-px bg-[#EAD9CF] -translate-x-1/2">
                 <motion.div
-                  key={item.year}
-                  initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
-                  whileInView={{ opacity: 1, x: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
-                  className={`relative flex items-start gap-6 md:gap-0 ${
-                    i % 2 === 0
+                  className="absolute top-0 left-0 w-full bg-[#a8453a] origin-top"
+                  style={{ height: lineHeight }}
+                />
+              </div>
+
+              <div className="space-y-12 md:space-y-0">
+                {journey.map((item, i) => (
+                  <motion.div
+                    key={item.year}
+                    initial={{ opacity: 0, x: i % 2 === 0 ? -30 : 30 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, margin: "-40px" }}
+                    transition={{ duration: 0.8, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] }}
+                    className={`relative flex items-start gap-6 md:gap-0 ${i % 2 === 0
                       ? "md:flex-row"
                       : "md:flex-row-reverse"
-                  } md:mb-12`}
-                >
-                  {/* Content box */}
-                  <div
-                    className={`pl-12 md:pl-0 md:w-[calc(50%-2rem)] ${
-                      i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"
-                    }`}
+                      } md:mb-12`}
                   >
+                    {/* Content box */}
                     <div
-                      className="text-[#a8453a] text-xs font-bold uppercase tracking-[0.3em] mb-2"
+                      className={`pl-12 md:pl-0 md:w-[calc(50%-2rem)] ${i % 2 === 0 ? "md:pr-12 md:text-right" : "md:pl-12 md:text-left"
+                        }`}
                     >
-                      {item.year}
+                      <div
+                        className="text-[#a8453a] text-xs font-bold uppercase tracking-[0.3em] mb-2"
+                      >
+                        {item.year}
+                      </div>
+                      <p className="text-[#7a5444] text-sm md:text-base leading-relaxed">
+                        {item.event}
+                      </p>
                     </div>
-                    <p className="text-[#7a5444] text-sm md:text-base leading-relaxed">
-                      {item.event}
-                    </p>
-                  </div>
 
-                  {/* Center dot */}
-                  <div className="absolute left-0 md:left-1/2 top-1 -translate-x-1/2 w-9 h-9 rounded-full bg-[#FDF9F4] border-2 border-[#a8453a] flex items-center justify-center z-10 shadow-md">
-                    <div className="w-2 h-2 rounded-full bg-[#a8453a]" />
-                  </div>
+                    {/* Center dot */}
+                    <div className="absolute left-0 md:left-1/2 top-1 -translate-x-1/2 w-9 h-9 rounded-full bg-[#FDF9F4] border-2 border-[#a8453a] flex items-center justify-center z-10 shadow-md">
+                      <div className="w-2 h-2 rounded-full bg-[#a8453a]" />
+                    </div>
 
-                  {/* Spacer for alternating layout */}
-                  <div className="hidden md:block md:w-[calc(50%-2rem)]" />
-                </motion.div>
-              ))}
+                    {/* Spacer for alternating layout */}
+                    <div className="hidden md:block md:w-[calc(50%-2rem)]" />
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
       )}
 
       {/* ─── VALUES SECTION ───────────────────────────────────────────────── */}
@@ -534,18 +531,14 @@ export default function AboutUs() {
               className="mt-5 text-4xl md:text-5xl font-light leading-tight text-[#5f3928]"
               style={{ fontFamily: "'Playfair Display', serif" }}
             >
-              Indy — tangan di balik
+              Nur — tangan di balik
               <br />
               setiap{" "}
               <em className="italic text-[#a8453a]">kelopak</em>.
             </h2>
 
             <p className="mt-6 text-base leading-relaxed text-[#7a5444]">
-              Berawal dari hobi menjahit mawar satin di sela kuliah, Indy
-              memutuskan menjadikan setiap rangkaian sebagai surat cinta yang
-              bisa dipegang. Ia memilih sendiri buah-buah segar dari pasar
-              pagi Surabaya, dan menjahit setiap kelopak satin dengan tangan
-              — tanpa mesin, tanpa pintasan.
+              Berawal dari keinginan mencari penghasilan tambahan di sela-sela kesibukannya sebagai staf administrasi perkantoran, Nur menerima sebuah tawaran untuk membuat buket. Dari sanalah, ia justru menemukan lebih dari sekadar pekerjaan sampingan — ia menemukan hobi sekaligus mata pencahariannya saat ini. Setiap kelopak dan pita dirangkainya dengan penuh kesabaran dan kasih sayang.
             </p>
 
             {/* Quote */}
@@ -560,11 +553,10 @@ export default function AboutUs() {
                 className="text-xl font-light italic leading-relaxed text-[#5f3928]"
                 style={{ fontFamily: "'Playfair Display', serif" }}
               >
-                "Setiap mawar satin yang aku jahit membawa doa kecil — semoga
-                yang menerimanya merasa benar-benar dicintai."
+                "Setiap buket yang aku rangkai adalah hasil dari kesabaran dan cinta — semoga keindahannya dapat selalu menghangatkan hati yang menerimanya."
               </p>
               <footer className="mt-3 text-[0.65rem] uppercase tracking-[0.3em] text-[#a87559] font-semibold">
-                — Indy, Founder &amp; Lead Florist
+                — Nur, Founder &amp; Lead Florist
               </footer>
             </motion.blockquote>
 
@@ -668,7 +660,7 @@ export default function AboutUs() {
             <em className="italic text-[#F5D9D2]">momen spesial</em> Anda?
           </h2>
           <p className="mt-6 text-white/70 text-base md:text-lg max-w-xl mx-auto leading-relaxed">
-            Konsultasi gratis, pengiriman same-day ke seluruh Surabaya. Hubungi
+            Konsultasi gratis. Hubungi
             kami dan wujudkan hadiah impian Anda.
           </p>
 
