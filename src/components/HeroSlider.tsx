@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
 
 // ─── Letakkan file-file ini di folder public/img/ ───────────────────────────
-// hero-fruit.png   → foto bouquet buah (PNG transparan, background dihapus)
-// hero-satin.png   → foto bouquet mawar satin
-// hero-money.png   → foto bouquet uang & bear
-// float-strawberry.png → elemen dekoratif stroberi PNG transparan
-// float-petal.png      → elemen dekoratif kelopak bunga PNG transparan
-// float-money.png      → elemen dekoratif uang PNG transparan
+// hero-fruit.webp   → foto bouquet buah (PNG transparan, background dihapus)
+// hero-satin.webp   → foto bouquet mawar satin
+// hero-money.webp   → foto bouquet uang & bear
+// float-strawberry.webp → elemen dekoratif stroberi PNG transparan
+// float-petal.webp      → elemen dekoratif kelopak bunga PNG transparan
+// float-money.webp      → elemen dekoratif uang PNG transparan
 // ────────────────────────────────────────────────────────────────────────────
 
 type Slide = {
@@ -33,8 +33,8 @@ const slides: Slide[] = [
     bg: "linear-gradient(135deg, oklch(0.94 0.04 80) 0%, oklch(0.88 0.07 60) 100%)",
     accent: "oklch(0.55 0.18 30)",
     ink: "oklch(0.22 0.08 30)",
-    bouquet: "/img/hero-fruit.png",
-    floats: ["/img/float-strawberry.png", "/img/float-strawberry.png", "/img/float-strawberry.png"],
+    bouquet: "/img/hero-fruit.webp",
+    floats: ["/img/float-strawberry.webp", "/img/float-strawberry.webp", "/img/float-strawberry.webp"],
   },
   {
     id: "satin",
@@ -45,8 +45,8 @@ const slides: Slide[] = [
     bg: "linear-gradient(135deg, oklch(0.92 0.05 15) 0%, oklch(0.82 0.1 10) 100%)",
     accent: "oklch(0.4 0.18 15)",
     ink: "oklch(0.2 0.1 15)",
-    bouquet: "/img/hero-satin.png",
-    floats: ["/img/float-petal.png", "/img/float-petal.png", "/img/float-petal.png"],
+    bouquet: "/img/hero-satin.webp",
+    floats: ["/img/float-petal.webp", "/img/float-petal.webp", "/img/float-petal.webp"],
   },
   {
     id: "money",
@@ -57,8 +57,8 @@ const slides: Slide[] = [
     bg: "linear-gradient(135deg, oklch(0.93 0.04 130) 0%, oklch(0.85 0.08 140) 100%)",
     accent: "oklch(0.35 0.1 140)",
     ink: "oklch(0.22 0.08 140)",
-    bouquet: "/img/hero-money.png",
-    floats: ["/img/float-money.png", "/img/float-money.png", "/img/float-money.png"],
+    bouquet: "/img/hero-money.webp",
+    floats: ["/img/float-money.webp", "/img/float-money.webp", "/img/float-money.webp"],
   },
 ];
 

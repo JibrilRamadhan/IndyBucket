@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 import {
   Package, Plus, ArrowLeft, Pencil, Trash2, ImageOff,
-  Images, CheckCircle, XCircle, Star, Sparkles, Loader2
+  Images, CheckCircle, XCircle, Star, Sparkles, Loader2, AlertTriangle
 } from 'lucide-react';
 import { useToast } from '../../components/Toast';
 
@@ -32,6 +32,7 @@ const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [deleting, setDeleting] = useState<number | null>(null);
+  const [itemToDelete, setItemToDelete] = useState<{id: number, name: string} | null>(null);
   const { loading: toastLoading, update } = useToast();
 
   const fetchProducts = async () => {
@@ -48,8 +49,11 @@ const ProductList: React.FC = () => {
 
   useEffect(() => { fetchProducts(); }, []);
 
-  const handleDelete = async (id: number, name: string) => {
-    if (!confirm(`Hapus produk "${name}"? Tindakan ini tidak dapat dibatalkan.`)) return;
+  const confirmDeleteAction = async () => {
+    if (!itemToDelete) return;
+    const { id, name } = itemToDelete;
+    
+    setItemToDelete(null);
     setDeleting(id);
 
     const tid = toastLoading('Menghapus produk...', name);
@@ -192,7 +196,7 @@ const ProductList: React.FC = () => {
                 <button style={s.btnEdit} onClick={() => navigate(`/admin/products/${product.id}/edit`)}>
                   <Pencil size={13} /> Edit
                 </button>
-                <button style={s.btnDelete} onClick={() => handleDelete(product.id, product.name)} disabled={deleting === product.id}>
+                <button style={s.btnDelete} onClick={() => setItemToDelete({ id: product.id, name: product.name })} disabled={deleting === product.id}>
                   {deleting === product.id
                     ? <><Loader2 size={13} style={{ animation: 'spin 1s linear infinite' }} /> Menghapus</>
                     : <><Trash2 size={13} /> Hapus</>}
@@ -203,7 +207,43 @@ const ProductList: React.FC = () => {
         </div>
       )}
 
-      <style>{`@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+      {/* Delete Confirmation Modal */}
+      {itemToDelete && (
+        <div style={{ position: 'fixed', inset: 0, zIndex: 100, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '16px', background: 'rgba(0,0,0,0.5)', backdropFilter: 'blur(4px)' }}>
+          <div style={{ background: '#fff', borderRadius: '16px', padding: '24px', maxWidth: '400px', width: '100%', boxShadow: '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)', animation: 'modalFadeIn 0.2s ease-out' }}>
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', marginBottom: '20px' }}>
+              <div style={{ background: '#fef2f2', padding: '10px', borderRadius: '50%', color: '#ef4444' }}>
+                <AlertTriangle size={24} />
+              </div>
+              <div>
+                <h3 style={{ margin: '0 0 8px 0', fontSize: '18px', fontWeight: '600', color: '#111827' }}>Hapus Produk?</h3>
+                <p style={{ margin: 0, fontSize: '14px', color: '#6b7280', lineHeight: 1.5 }}>
+                  Apakah Anda yakin ingin menghapus <strong>"{itemToDelete.name}"</strong>? Tindakan ini tidak dapat dibatalkan.
+                </p>
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '12px' }}>
+              <button 
+                onClick={() => setItemToDelete(null)}
+                style={{ padding: '8px 16px', borderRadius: '8px', border: '1px solid #d1d5db', background: '#fff', color: '#374151', fontWeight: '500', cursor: 'pointer', transition: 'all 0.2s' }}
+              >
+                Batal
+              </button>
+              <button 
+                onClick={confirmDeleteAction}
+                style={{ padding: '8px 16px', borderRadius: '8px', border: 'none', background: '#ef4444', color: '#fff', fontWeight: '500', cursor: 'pointer', transition: 'all 0.2s', boxShadow: '0 4px 6px -1px rgba(239, 68, 68, 0.2)' }}
+              >
+                Ya, Hapus
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes modalFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+      `}</style>
     </div>
   );
 };

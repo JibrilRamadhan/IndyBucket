@@ -7,7 +7,7 @@ export default function Footer() {
           <div className="flex items-center gap-3">
             <div className="relative h-12 w-12 flex items-center justify-center">
               <img
-                src="/img/Logo.png"
+                src="/img/Logo.webp"
                 alt="Indy Bucket Logo"
                 className="h-full w-full object-contain"
               />

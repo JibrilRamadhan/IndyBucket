@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Layout from './components/Layout';
 import { ToastProvider } from './components/Toast';
+import ScrollToTop from './components/ScrollToTop';
 
 // Lazy load pages for optimized initial bundle size
 const Home = lazy(() => import('./pages/Home'));
@@ -11,6 +12,7 @@ const Login = lazy(() => import('./pages/Login'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard'));
 const ProductList = lazy(() => import('./pages/admin/ProductList'));
 const ProductForm = lazy(() => import('./pages/admin/ProductForm'));
+const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Sleek glassmorphic loader matching premium branding
 const PageLoader = () => (
@@ -31,6 +33,7 @@ function App() {
   return (
     <ToastProvider>
       <BrowserRouter>
+        <ScrollToTop />
         <Suspense fallback={<PageLoader />}>
           <Routes>
             <Route path="/" element={<Layout />}>
@@ -45,6 +48,9 @@ function App() {
             <Route path="/admin/products" element={<ProductList />} />
             <Route path="/admin/products/create" element={<ProductForm />} />
             <Route path="/admin/products/:id/edit" element={<ProductForm />} />
+            
+            {/* 404 Route */}
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
       </BrowserRouter>

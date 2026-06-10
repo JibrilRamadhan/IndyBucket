@@ -77,7 +77,7 @@ export default function Navbar() {
             <Link to="/" className="flex items-center gap-3">
               <div className="relative h-10 w-10 rounded-full bg-primary flex items-center justify-center p-1.5 shadow-md">
                 <img
-                  src="/img/Logo.png"
+                  src="/img/Logo.webp"
                   alt="Indy Bucket Logo"
                   className="h-full w-full object-contain"
                 />

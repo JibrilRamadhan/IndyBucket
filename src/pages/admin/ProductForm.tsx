@@ -16,24 +16,34 @@ interface ExistingImage {
 
 const API_BASE = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api';
 
-const compressImage = (file: File, maxWidth = 1920, maxHeight = 1920, quality = 0.82): Promise<File> => {
+/**
+ * Konversi gambar apapun (JPEG, PNG, JPG) ke format WebP sekaligus resize jika terlalu besar.
+ * Selalu menghasilkan file WebP untuk efisiensi loading website.
+ */
+const convertToWebP = (
+  file: File,
+  maxWidth = 1920,
+  maxHeight = 1920,
+  quality = 0.85
+): Promise<File> => {
   return new Promise((resolve) => {
-    // Jika ukuran file kurang dari atau sama dengan 3MB, tidak perlu dikompres
-    if (file.size <= 3 * 1024 * 1024) {
+    // Kalau sudah WebP dan ukurannya kecil, langsung resolve
+    if (file.type === 'image/webp' && file.size <= 1 * 1024 * 1024) {
       resolve(file);
       return;
     }
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
+
     reader.onload = (event) => {
       const img = new Image();
+
       img.onload = () => {
         const canvas = document.createElement('canvas');
-        let width = img.width;
-        let height = img.height;
+        let { width, height } = img;
 
-        // Proporsi mengecil jika melebihi batas maksimum
+        // Resize proporsional jika melebihi batas
         if (width > height) {
           if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
@@ -55,31 +65,39 @@ const compressImage = (file: File, maxWidth = 1920, maxHeight = 1920, quality = 
           return;
         }
 
+        // Isi background putih untuk gambar PNG transparan agar tidak jadi hitam
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, width, height);
         ctx.drawImage(img, 0, 0, width, height);
 
-        // Kompresi ke format JPEG (atau WEBP jika asalnya WEBP)
-        const outputType = file.type === 'image/webp' ? 'image/webp' : 'image/jpeg';
+        // Selalu output ke WebP
         canvas.toBlob(
           (blob) => {
             if (!blob) {
               resolve(file);
               return;
             }
-            const nameWithoutExt = file.name.substring(0, file.name.lastIndexOf('.'));
-            const ext = outputType === 'image/webp' ? 'webp' : 'jpg';
-            const compressedFile = new File([blob], `${nameWithoutExt}-compressed.${ext}`, {
-              type: outputType,
+            const nameWithoutExt = file.name.replace(/\.[^/.]+$/, '');
+            const webpFile = new File([blob], `${nameWithoutExt}.webp`, {
+              type: 'image/webp',
               lastModified: Date.now(),
             });
-            resolve(compressedFile);
+            console.log(
+              `[WebP Convert] ${file.name} (${(file.size / 1024).toFixed(0)} KB) → ` +
+              `${webpFile.name} (${(webpFile.size / 1024).toFixed(0)} KB) ` +
+              `[${Math.round((1 - webpFile.size / file.size) * 100)}% lebih kecil]`
+            );
+            resolve(webpFile);
           },
-          outputType,
+          'image/webp',
           quality
         );
       };
+
       img.onerror = () => resolve(file);
       img.src = event.target?.result as string;
     };
+
     reader.onerror = () => resolve(file);
   });
 };
@@ -180,30 +198,31 @@ const ProductForm: React.FC = () => {
     const urls: string[] = [];
     for (let i = 0; i < files.length; i++) {
       let file = files[i];
-      
-      // Auto compress jika ukuran file melebihi 3MB
-      if (file.size > 3 * 1024 * 1024) {
-        if (toastId) {
-          update(toastId, { 
-            title: `Mengompres gambar ${i + 1}/${files.length}...`, 
-            message: `${file.name} (${(file.size / 1024 / 1024).toFixed(1)} MB)` 
-          });
-        }
-        try {
-          const originalSize = file.size;
-          file = await compressImage(file);
-          console.log(`Compressed: ${(originalSize / 1024 / 1024).toFixed(2)}MB -> ${(file.size / 1024 / 1024).toFixed(2)}MB`);
-        } catch (err) {
-          console.error("Gagal kompresi:", err);
-        }
+
+      // Selalu konversi ke WebP (sekaligus resize jika > 1920px)
+      if (toastId) {
+        update(toastId, {
+          title: `Mengonversi ke WebP ${i + 1}/${files.length}...`,
+          message: `${file.name} (${(file.size / 1024).toFixed(0)} KB)`,
+        });
+      }
+      try {
+        file = await convertToWebP(file);
+      } catch (err) {
+        console.error('Gagal konversi WebP:', err);
       }
 
       if (toastId) {
         update(toastId, { title: `Mengupload gambar ${i + 1}/${files.length}...`, message: file.name });
       }
-      const fileExt = file.name.split('.').pop();
-      const fileName = `${Math.random().toString(36).substring(2, 15)}-${Date.now()}.${fileExt}`;
-      const { error } = await supabase.storage.from('products').upload(fileName, file, { cacheControl: '3600', upsert: false });
+
+      // Selalu simpan dengan ekstensi .webp
+      const fileName = `${Math.random().toString(36).substring(2, 15)}-${Date.now()}.webp`;
+      const { error } = await supabase.storage.from('products').upload(fileName, file, {
+        cacheControl: '3600',
+        upsert: false,
+        contentType: 'image/webp',
+      });
       if (error) throw new Error(`Gagal upload ${file.name}: ${error.message}`);
       const { data } = supabase.storage.from('products').getPublicUrl(fileName);
       urls.push(data.publicUrl);
@@ -415,10 +434,13 @@ const ProductForm: React.FC = () => {
               style={{ display: 'none' }} onChange={e => handleFileSelect(e.target.files)} />
             <UploadCloud size={36} style={{ color: dragOver ? '#ec4899' : '#9ca3af', marginBottom: '10px' }} />
             <p style={{ fontWeight: '600', color: '#374151', margin: '0 0 4px 0', fontSize: '14px' }}>
-              Seret & lepas gambar di sini
+              Seret &amp; lepas gambar di sini
             </p>
             <p style={{ fontSize: '13px', color: '#9ca3af', margin: 0 }}>
-              atau klik untuk memilih file (JPEG, PNG, WebP, maks 5MB)
+              atau klik untuk memilih file (JPEG, PNG, JPG, WebP)
+            </p>
+            <p style={{ fontSize: '11px', color: '#ec4899', margin: '6px 0 0 0', fontWeight: '500' }}>
+              ✦ Semua gambar otomatis dikonversi ke WebP
             </p>
           </div>
         </div>

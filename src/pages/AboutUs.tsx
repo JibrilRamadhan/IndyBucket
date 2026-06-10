@@ -146,7 +146,7 @@ export default function AboutUs() {
           style={{ y: heroBgY }}
         >
           <img
-            src="/img/BG-aboutUs.jpg"
+            src="/img/BG-aboutUs.webp"
             alt=""
             aria-hidden
             className="w-full h-[120%] object-cover object-center"
@@ -599,7 +599,7 @@ export default function AboutUs() {
               />
               <div className="overflow-hidden rounded-[2rem] border border-[#EAD9CF] shadow-[0_60px_120px_-30px_rgba(95,57,40,0.4)]">
                 <motion.img
-                  src="/img/tes.jpeg"
+                  src="/img/tes.webp"
                   alt="Pendiri Indy Buket merangkai buket premium di studio Surabaya"
                   style={{ y: founderImgY }}
                   className="w-full aspect-[4/5] object-cover scale-[1.12]"
