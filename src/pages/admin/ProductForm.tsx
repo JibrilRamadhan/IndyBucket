@@ -111,6 +111,7 @@ const ProductForm: React.FC = () => {
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
+  const [features, setFeatures] = useState<string[]>([]);
   const [price, setPrice] = useState('');
   const [stockStatus, setStockStatus] = useState<'available' | 'out_of_stock'>('available');
   const [label, setLabel] = useState<'none' | 'best_seller' | 'new'>('none');
@@ -134,7 +135,8 @@ const ProductForm: React.FC = () => {
           const p = data.product;
           setName(p.name);
           setDescription(p.description || '');
-          setPrice(String(p.price));
+          setFeatures(p.features || []);
+          setPrice(Number(p.price).toLocaleString('id-ID'));
           setStockStatus(p.stock_status);
           setLabel(p.label);
           setHomeSection(p.home_section ?? '');
@@ -167,6 +169,16 @@ const ProductForm: React.FC = () => {
   const removeNewFile = (index: number) => {
     setNewFiles(prev => prev.filter((_, i) => i !== index));
     setNewPreviews(prev => prev.filter((_, i) => i !== index));
+  };
+
+  const addFeature = () => setFeatures([...features, '']);
+  const updateFeature = (index: number, value: string) => {
+    const newFeatures = [...features];
+    newFeatures[index] = value;
+    setFeatures(newFeatures);
+  };
+  const removeFeature = (index: number) => {
+    setFeatures(features.filter((_, i) => i !== index));
   };
 
   const deleteExistingImage = async (imageId: number) => {
@@ -252,7 +264,16 @@ const ProductForm: React.FC = () => {
         update(tid, { type: 'loading', title: isEdit ? 'Menyimpan perubahan...' : 'Menambah produk...' });
       }
 
-      const payload = { name, description: description || null, price: Number(price), stock_status: stockStatus, label, home_section: homeSection || null, image_urls: uploadedImageUrls };
+      const payload = { 
+        name, 
+        description: description || null, 
+        features: features.filter(f => f.trim() !== ''),
+        price: Number(price.toString().replace(/\./g, '')), 
+        stock_status: stockStatus, 
+        label, 
+        home_section: homeSection || null, 
+        image_urls: uploadedImageUrls 
+      };
 
       if (isEdit && id) {
         const res = await fetch(`${API_BASE}/admin/products/${id}`, {
@@ -339,16 +360,56 @@ const ProductForm: React.FC = () => {
           </div>
 
           <div style={s.field}>
-            <label style={s.label}>Deskripsi</label>
+            <label style={s.label}>Deskripsi Singkat</label>
             <textarea value={description} onChange={e => setDescription(e.target.value)}
-              placeholder="Deskripsikan produk bouquet Anda secara detail..." style={s.textarea} rows={4} />
+              placeholder="Deskripsi..." style={{ ...s.input, minHeight: '80px', resize: 'vertical' }} />
           </div>
 
-          <div style={s.fieldRow}>
+          <div style={s.field}>
+            <label style={s.label}>Inclusions (Yang didapatkan)</label>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+              {features.map((feat, idx) => (
+                <div key={idx} style={{ display: 'flex', gap: '8px' }}>
+                  <input
+                    type="text"
+                    value={feat}
+                    onChange={e => updateFeature(idx, e.target.value)}
+                    placeholder="Contoh: Free kartu ucapan handwritten"
+                    style={{ ...s.input, flex: 1 }}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => removeFeature(idx)}
+                    style={{ ...s.removeImgBtn, position: 'static', transform: 'none', background: '#fef2f2', color: '#ef4444' }}
+                  >
+                    <X size={14} />
+                  </button>
+                </div>
+              ))}
+              <button
+                type="button"
+                onClick={addFeature}
+                style={{ alignSelf: 'flex-start', fontSize: '13px', color: '#ec4899', background: 'none', border: 'none', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '4px', fontWeight: '500', padding: '4px 0' }}
+              >
+                <Plus size={14} /> Tambah Poin
+              </button>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
             <div style={{ ...s.field, flex: 1 }}>
               <label style={s.label}>Harga (Rp) *</label>
-              <input type="number" value={price} onChange={e => setPrice(e.target.value)}
-                placeholder="150000" style={s.input} min="0" required />
+              <input 
+                type="text" 
+                value={price} 
+                onChange={e => {
+                  const val = e.target.value.replace(/\D/g, '');
+                  setPrice(val ? Number(val).toLocaleString('id-ID') : '');
+                }}
+                placeholder="150.000" 
+                style={s.input} 
+                required 
+              />
             </div>
 
             <div style={{ ...s.field, flex: 1 }}>

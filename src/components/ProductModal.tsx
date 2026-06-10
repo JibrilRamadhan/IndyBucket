@@ -89,10 +89,9 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
     setActiveImg(i => (i + 1) % sortedImages.length);
   }
 
-  // Parse description into bullets if there are newlines, otherwise just use as paragraph
-  const descParagraphs = product.description ? product.description.split('\n').filter(p => p.trim() !== '') : [];
-  const descriptionText = descParagraphs.length > 0 ? descParagraphs[0] : 'Rangkaian premium dengan sentuhan penuh kasih, cocok sebagai hadiah istimewa untuk momen yang tak terlupakan.';
-  const highlights = descParagraphs.length > 1 ? descParagraphs.slice(1) : [];
+  // Description dan features langsung dari field API
+  const descriptionText = product.description || 'Rangkaian premium dengan sentuhan penuh kasih, cocok sebagai hadiah istimewa untuk momen yang tak terlupakan.';
+  const features = product.features ?? [];
 
   return (
     <>
@@ -222,27 +221,15 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                     {descriptionText}
                   </p>
 
-                  {/* Highlights */}
-                  {highlights.length > 0 && (
+                  {/* Features / Inclusions */}
+                  {features.length > 0 && (
                     <ul className="mt-6 space-y-3">
-                      {highlights.map((h, idx) => (
+                      {features.map((feat, idx) => (
                         <li key={idx} className="flex items-start gap-3 text-sm text-[#5c4a43]">
                           <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6A1428]" />
-                          <span>{h.replace(/^- /, '')}</span>
+                          <span>{feat}</span>
                         </li>
                       ))}
-                    </ul>
-                  )}
-                  {highlights.length === 0 && (
-                    <ul className="mt-6 space-y-3">
-                      <li className="flex items-start gap-3 text-sm text-[#5c4a43]">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6A1428]" />
-                        <span>Wrapping premium + pita eksklusif</span>
-                      </li>
-                      <li className="flex items-start gap-3 text-sm text-[#5c4a43]">
-                        <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#6A1428]" />
-                        <span>Free kartu ucapan handwritten</span>
-                      </li>
                     </ul>
                   )}
 

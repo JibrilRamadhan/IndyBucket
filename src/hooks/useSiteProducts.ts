@@ -15,6 +15,7 @@ export interface SiteProduct {
   id: number;
   name: string;
   description: string | null;
+  features: string[];
   price: string;
   stock_status: 'available' | 'out_of_stock';
   label: 'none' | 'best_seller' | 'new';
